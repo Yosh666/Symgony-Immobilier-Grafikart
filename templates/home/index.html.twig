@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Agence du pangolin{% endblock %}
+
+{% block body %}
+
+
+
+    <div class= "jumbotron text-center">
+        <h1>Agence le pangolin sauvage</h1>
+        
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+        Possimus illo ipsum totam ea sint, est blanditiis magni minima sunt sapiente sed inventore odio molestiae corrupti quia perferendis recusandae accusamus in.</p>
+    </div>
+    <div class="container">
+        <h2>Nos dernières nouveautés</h2>
+        <div class="row flex">
+            {% for property in properties %}
+                <div class="col-3">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href=" {{ path ( 'property.show', {id: property.id ,slug: property.slug }) }}" > {{ property.title}} </a>
+                        </h5>
+                        <p class="card-text"> {{property.city}} {{property.postalCode}} </p>
+                        <div class="text-primary">
+                            {{property.formattedPrice }} €
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
