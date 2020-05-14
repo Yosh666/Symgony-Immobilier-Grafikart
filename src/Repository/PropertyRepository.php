@@ -12,6 +12,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Property|null findOneBy(array $criteria, array $orderBy = null)
  * @method Property[]    findAll()
  * @method Property[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Property[]  findAllVisible sold=false
+ * @method Property[]  findLatest sold=false maxResults (4)
  */
 class PropertyRepository extends ServiceEntityRepository
 {

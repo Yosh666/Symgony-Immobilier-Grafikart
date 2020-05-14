@@ -107,7 +107,7 @@ class Property
 
         return $this;
     }
-    public function getSlug(): string
+    public function getSlug(): string //ADD slug méthode
     {
         return (new Slugify())->slugify($this->title);
     }
@@ -177,16 +177,20 @@ class Property
         return $this->price;
     }
 
-    public function setPrice(int $price): self
+    public function setPrice(int $price): self 
+    
     {
         $this->price = $price;
 
         return $this;
     }
-    public function getFormattedPrice():string
+    public function getFormattedPrice():string //ADD format prix
     {
         return  number_format($this->price,0,'',' ');
     }
+    
+
+    
 
     public function getHeat(): ?int
     {
@@ -199,11 +203,11 @@ class Property
 
         return $this;
     }
-    public function getHeatType():string{
+    public function getHeatType():string{ //ADD chauffage
         return self::HEAT[$this->heat];
     }
 
-    public function getCity(): ?string
+    public function getCity(): ?string 
     {
         return $this->city;
     }
