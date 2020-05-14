@@ -46,7 +46,7 @@ class PropertyType extends AbstractType
             ->add('sold',null,[
                 'label'=>'Vendu'
             ])
-            /*NOTE 
+            /*NOTE formconstruct 
             on met ce champ en commentaire pr pas kon puisse le modifier j'aurais pu le retier aussi
             ->add('created_at')
             */
