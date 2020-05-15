@@ -60,10 +60,8 @@ class PropertyType extends AbstractType
         ]);
     }
 
-    private function getChoices()/*ASK 
-    ça se fait d'écrire des fonctions dans un form ou seulement quand elles sont private à ce form?*/
-    {
-        $choices= Property::HEAT; /*ASK ::,
+    private function getChoices(){
+        $choices= Property::HEAT; /*NOTE ::
         la on utlise:: car c'est une constante?*/
         $output=[];
         foreach($choices as $k=> $v){

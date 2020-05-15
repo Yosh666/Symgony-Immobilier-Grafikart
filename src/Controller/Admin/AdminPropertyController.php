@@ -23,7 +23,8 @@ class AdminPropertyController extends AbstractController{
      */
     private $em;
 
-    public function __construct(PropertyRepository $repository,EntityManagerInterface $em)//ASK le repository c'est pr récupérer des datas?
+    public function __construct(PropertyRepository $repository,EntityManagerInterface $em)/*NOTE
+     le repository va permettre d'utiliser les function qui nous permettent de voir les données findALL etc etc et donc de manipuler des objets property */
     {
         $this->repository=$repository;
         $this->em=$em;
@@ -46,7 +47,7 @@ class AdminPropertyController extends AbstractController{
      */
     public function new(Request $request):Response
     {
-        $property= new Property();//BUG qui me saoule!!!!
+        $property= new Property();
 
         $form= $this->createForm(PropertyType::class,$property);
         $form->handleRequest($request);
@@ -54,8 +55,10 @@ class AdminPropertyController extends AbstractController{
         if($form->isSubmitted() && $form->isValid())
         {
 
-            $this->em->persist($property);//ASK persist?
+            $this->em->persist($property);/*NOTE persist
+            la persistance c'est parce qu'on va l'injecter pr la première fois dans la bdd donc c comme prepare*/
             $this->em->flush();
+            $this->addFlash('success','Nouveau venu dans la team \0/');
             return $this->redirectToRoute("admin.property.index");
         }
 
@@ -70,7 +73,7 @@ class AdminPropertyController extends AbstractController{
      * @param Request $request
      * @return Response//TODO response a voir de plus prés
      */
-    public function edit(Property $property,Request $request)//ASK doit on toujours demander :Response?
+    public function edit(Property $property,Request $request):Response
     {
         $form= $this->createForm(PropertyType::class,$property);
         /*NOTE form 
@@ -84,7 +87,9 @@ class AdminPropertyController extends AbstractController{
         ici on vérifie qu'on a bien cliqué sur le boouton
         et qu'on respecte les régles de validation*/
         {
-            $this->em->flush();//ASK pas de persist?
+            $this->em->flush();/*NOTE persist
+            on pourrait faire un persist avant le flush mais ça ne changerait bien parce qu'il existe déja une équivalence dans la bdd*/
+            $this->addFlash('success','Modifié tranquille pépouze tu vois');
             return $this->redirectToRoute("admin.property.index");
         }
         
@@ -95,6 +100,35 @@ class AdminPropertyController extends AbstractController{
         ]);
     }
    
+    /**
+     * @Route ("/admin/adminproperty/{id}", name="admin.property.delete",methods="DELETE")
+     */
+    public function delete(Property $property, Request $request):Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$property->getId(), $request->get('_token')))  /*NOTE
+        on vérifie la validité du token*/
+        {   
+             $this->em->remove($property);
+            /*NOTE
+            on retire l'objet property*/
+           
+            $this->em->flush();
+            /*NOTE
+            on porte l'information à la bdd */
+            $this->addFlash('success','Il s\'est fait kicker 0_o');
+            //return new Response ('Suppression');
+        }
+        
+        return $this->redirectToRoute('admin.property.index');    
+    }
+        
+           
+
+
+
+
+
+
 
 
 }

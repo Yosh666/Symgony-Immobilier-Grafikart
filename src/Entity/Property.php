@@ -5,9 +5,11 @@ use Cocur\Slugify\Slugify;
 use App\Repository\PropertyRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass=PropertyRepository::class)
+ * @UniqueEntity("title")//ADD UniqueEntity
  */
 class Property
 {
@@ -24,18 +26,31 @@ class Property
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(//BUG ne marque pas les messages
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "faut au moins écrire {{ limit }} lettre",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters",
+     *      allowEmptyString = false)
      */
-    private $title;
+    private $title;//ADD @Assert
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *  
+     * 
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *      min = 8,
+     *      max = 400,
+     *      minMessage = "On ne vend pas de cellule de prison",
+     *      maxMessage = "Pour les chateaux faut aller sur l'agence à Jérémie")//BUG le message n'apparait pas
      */
-    private $surface;
+    private $surface;//ADD @Assert
 
     /**
      * @ORM\Column(type="integer")
@@ -74,8 +89,10 @@ class Property
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex("/^[0-9]{5}$/")
+     * 
      */
-    private $postal_code;
+    private $postal_code;//ADD regex @Assert
 
     /**
      * @ORM\Column(type="boolean",options={"default":"false"})
