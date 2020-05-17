@@ -56,7 +56,11 @@ class AdminPropertyController extends AbstractController{
         {
 
             $this->em->persist($property);/*NOTE persist
-            la persistance c'est parce qu'on va l'injecter pr la première fois dans la bdd donc c comme prepare*/
+            la persistance fait passer la donnée stockée en mémoire (vive) à un état stocké durablement dans la BDD mais il est pas encore présent en base, 
+            persist fait de ton entité un "candidat" à l'ajout !
+            tu peux faire autant de persist que tu veux, si tu as 3 nouvelles entités à enregistrer
+            il n'y aura à la fin qu'un seul et unique flush() (qui lui, inscrit les données PERSISTEES en base)
+            dans le cas du update, pas de persist, elles ont été inscrites en base. */
             $this->em->flush();
             $this->addFlash('success','Nouveau venu dans la team \0/');
             return $this->redirectToRoute("admin.property.index");

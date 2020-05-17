@@ -26,7 +26,7 @@ class Property
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(//BUG ne marque pas les messages
+     * @Assert\Length(
      *      min = 2,
      *      max = 100,
      *      minMessage = "faut au moins écrire {{ limit }} lettre",
@@ -34,7 +34,7 @@ class Property
      *      allowEmptyString = false)
      */
     private $title;//ADD @Assert
-
+   
     /**
      * @ORM\Column(type="text", nullable=true)
      *  
@@ -44,11 +44,15 @@ class Property
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Range(
-     *      min = 8,
-     *      max = 400,
-     *      minMessage = "On ne vend pas de cellule de prison",
-     *      maxMessage = "Pour les chateaux faut aller sur l'agence à Jérémie")//BUG le message n'apparait pas
+     * @Assert\GreaterThan(
+     *  value=8,
+     * message="On ne vend pas de cellule de prison")
+     * @Assert\LessThan(
+     *  value=400,
+     * message="Pour les chateaux faut aller sur l'agence à Jérémie")
+     *
+     *     
+     * 
      */
     private $surface;//ADD @Assert
 
@@ -95,7 +99,7 @@ class Property
     private $postal_code;//ADD regex @Assert
 
     /**
-     * @ORM\Column(type="boolean",options={"default":"false"})
+     * @ORM\Column(type="boolean",options={"default":false})
      */
     private $sold=false;
 

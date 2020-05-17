@@ -47,6 +47,7 @@ class PropertyRepository extends ServiceEntityRepository
         
         return $this->findVisibleQuery()
            ->setMaxResults(4)
+           ->orderBy('p.id','DESC')
            ->getQuery()
            ->getResult();
         

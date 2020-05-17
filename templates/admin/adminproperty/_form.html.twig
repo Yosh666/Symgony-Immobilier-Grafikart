@@ -1,10 +1,11 @@
-{{ form_start(form)}}
+{{ form_start(form)}} 
+    {{ form_errors(form) }}
     <div class="row">
         <div class="col-md-4">
             {{ form_row(form.title) }}
         </div>
         <div class="col-md-4">
-            {{ form_row(form.surface) }}
+            {{ form_row(form.surface) }} 
         </div>
         <div class="col-md-4">
             {{ form_row(form.price) }}
