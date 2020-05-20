@@ -17,7 +17,7 @@ class SecurityController extends AbstractController
         $lastUsername= $authenticationUtils->getLastUsername();/*NOTES
         permet de récupérer le denrier pseudo tapé par l'utilisateur
         */
-        //ASK vérifier si c pr cette page ou sur le navigateur
+        
 
 
         return $this->render('security/login.html.twig', [

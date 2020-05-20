@@ -80,8 +80,9 @@ class User implements UserInterface,\Serializable
     {
         /*NOTES
         cela va permettre de "sérializer" transformer notre objet en chaine
+        car une requête HTTP ne contient que du texte
         */
-        //ASK serialize besoin de précision
+       
         return serialize([
             $this->id,
             $this->username,
@@ -94,12 +95,12 @@ class User implements UserInterface,\Serializable
         /*NOTES
         permet de desérializer qui a été sérializé
         */
-        //ASK unserialize
+        
         list(
             $this->id,
             $this->username,
             $this->password
         ) = unserialize($serialized, ['allowed_classes'=>false]);
-        //ASK prkoi allowedclasses=>false
+        
     }
 }
