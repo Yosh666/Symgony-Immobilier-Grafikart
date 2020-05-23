@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer les biens{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+
+        <h1>Gérer les biens</h1>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message}}
+            </div>
+        {% endfor %}
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for property in properties %}
+                    <tr>
+                        <td> 
+                            {{ property.title}}  
+                        </td>
+                        <td>
+                            <a href="{{ path('admin.property.edit', {id:property.id} ) }} " class="btn btn-secondary">Editer</a>
+                            <form method= "post" action="{{ path('admin.property.delete', {id:property.id} ) }} " style="display: inline-block;"
+                            onsubmit="return confirm('T sure???') ">
+                                <input type="hidden" name="_method" value='DELETE'>{#NOTE 
+                                changer la valeur de la méthode permet de ne pas confondre les path dans l'adminpropertycontroller
+                                une forme de requirements en somme #}
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ property.id) }}" >{#NOTE
+                                    NE PAS METTRE D'ESPACE APRES VALUE sinon ça fait grave chier!
+                                    ici on rajoute un token (methode twig csrf_token) le fait tout seul afin d'éviter le "man in the middle"#}
+                                <button class="btn btn-danger">Supprimer le bien</button>
+
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>               
+        </table>
+
+        <div class="text-right">
+            <a href="{{ path('admin.property_new') }}" class="btn btn-secondary">Créer un nouveau bien</a>
+        </div>
+    </div>
+
+
+            
+             
+          
+       
+
+{% endblock %}
+

@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Option;
 use App\Entity\PropertySearch;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -32,23 +34,27 @@ class PropertySearchType extends AbstractType
                     'placeholder'=>'Budget max'
                 ]
             ])
+            ->add('options',EntityType::class,[
+                'required'=>false,
+                'label'=>false,
+                'class'=> Option::class,
+                'choice_label'=>'name',
+                'multiple'=>true
+            ]);
            /* NOTES
             ->add('submit',SubmitType::class,[
                 'label'=>'Rechercher'
             ])
             pour ne pas gacher l'Url on choisit de créer le bouton dans la view
             */
-        ;
+        
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => PropertySearch::class,
-            'method'=>'get',/*ASK
-                pourquoi choisir une méthode get
-                en dehors de transmettre par l'url kel est la différence avec post
-                */
+            'method'=>'get',
             'csrf_protection'=>false/*NOTES
             il s'agit là d'une recherhce il n'y a pas à s'inquiéter du token
             c'est juste une récupération de data innocentes

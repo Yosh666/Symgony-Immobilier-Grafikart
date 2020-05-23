@@ -2,6 +2,8 @@
 namespace App\Controller\Admin;
 
 //use App\Entity\Property;
+
+use App\Entity\Option;
 use App\Entity\Property;
 use App\Form\PropertyType;
 use App\Repository\PropertyRepository;
@@ -79,6 +81,8 @@ class AdminPropertyController extends AbstractController{
      */
     public function edit(Property $property,Request $request):Response
     {
+        
+
         $form= $this->createForm(PropertyType::class,$property);
         /*NOTE form 
         dans le form on entre toute les données du bien ciblé dans l'id*/
