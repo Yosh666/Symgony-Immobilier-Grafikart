@@ -7,6 +7,7 @@ use App\Entity\Property;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,6 +19,10 @@ class PropertyType extends AbstractType
         $builder
             ->add('title',TextType::class,[
                 'label'=>'Nom'
+            ])
+            ->add('imageFile',FileType::class,[
+                'required'=>false
+
             ])
             ->add('description')
             ->add('surface',TextType::class)
@@ -40,7 +45,8 @@ class PropertyType extends AbstractType
             ->add('options',EntityType::class,[
                 'class'=>Option::class,
                 'choice_label'=>'name',
-                'multiple'=>true
+                'multiple'=>true,
+                "required"=>false
             ])
             ->add('city',null,[
                 'label'=>'Ville'
